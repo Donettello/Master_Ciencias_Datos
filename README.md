@@ -2,7 +2,7 @@
 Códigos y prácticas realizadas durante el transcurso del Máster en Ciencia de Datos en la UAM.
 Las carpetas están ordenadas por asignatura:
 * AR: Aprendizaje por Refuerzo
-* CN: Computación numérica
+* [CN](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/CN): Computación numérica
 * GD: Gestión de Datos
 * MAAA: Métodos Avanzados en Aprendizaje Automático
 * MAE: Métodos Avanzados en Estadística

@@ -5,7 +5,7 @@ Las carpetas están ordenadas por asignatura:
 * [CN](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/CN): Computación numérica
 * GD: Gestión de Datos
 * [MAAA](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/MAAA): Métodos Avanzados en Aprendizaje Automático
-* MAE: Métodos Avanzados en Estadística
+* [MAE](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/MAE): Métodos Avanzados en Estadística
 * NI: Neuroinformática
 * OPT: Optimización
 * PDGE: Procesamiento de Datos a Gran Escala
@@ -14,4 +14,4 @@ Las carpetas están ordenadas por asignatura:
 * PE: Procesos estocásticos
 * PICDD: Proyecto de Investigación para la Ciencia de Datos
 * RI: Recuperación de Información
-* TI: Teoría de la Información
+* [TI](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/TI): Teoría de la Información

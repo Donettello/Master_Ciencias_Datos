@@ -4,7 +4,7 @@ Las carpetas están ordenadas por asignatura:
 * AR: Aprendizaje por Refuerzo
 * [CN](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/CN): Computación numérica
 * GD: Gestión de Datos
-* MAAA: Métodos Avanzados en Aprendizaje Automático
+* [MAAA](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/MAAA): Métodos Avanzados en Aprendizaje Automático
 * MAE: Métodos Avanzados en Estadística
 * NI: Neuroinformática
 * OPT: Optimización

@@ -1,0 +1,370 @@
+---
+title: "Apuntes Métodos Avanzados en Estadística"
+author: "Alvaro"
+date: "14/09/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Tema 0: Introducción a R y repaso
+## Características de R
+* Distingue entre mayúsculas y minúsculas.
+* Los nombres de todo empiezan por una letra (Como en cualquier lenguaje, vaya).
+* Operador de asignación. Se suele usar '<-', pero tambíen vale con el signo '='.
+```{r Operaciones de asignación}
+x = 2
+y <- 3
+x
+y
+```
+* Creamos arrays de elementos. Los elementos no tiene por qué compartir tipos.
+```{r Creación de arrays}
+x = c(1,2,3,4,5)
+y = c(3,"Alvaro", 9.5)
+x
+y
+```
+* Podemos listar el nombre de las variables que se están usando.
+```{r Lista de objetos del area de trabajo}
+ls()
+```
+* Podemos borrar las cosas que ya no nos interesan.
+```{r Eliminar objetos del area de trabajo}
+rm(x)
+```
+* Obtener ayuda con help() o help.search()
+
+
+## Vectores. Cómo generarlos
+
+* Usando ':'.
+```{r Generar vectores}
+1:6
+```
+* Usando la función 'seq()'. Lo que hace es crear una secuencia.
+```{r Función seq()}
+seq(2, 10, 2)
+```
+* Usando la función 'rep()'. Lo que hace es repetir un elemento x veces.
+```{r Función rep()}
+rep(c(1,3), 4)
+```
+## Filtrado de vectores
+A continuación se muestra cómo seleccionar algunos elementos
+```{r}
+x = (1:5)^2
+x[2]
+```
+Notese que en los arrays de R el valor 0 es el tipo de datos que contiene y los valores empiezan en la posición 1.
+
+Se pueden elegir los elementos que queramos poniendo un vector en las coordenadas del array.
+
+```{r Elementos de un array}
+x[c(2, 5)]
+```
+
+Si queremos excluir las posiciones, basta con poner el signo - en el array.
+```{r Exclusión de elementos}
+x[-c(2, 5)]
+```
+
+Podemos seleccionar los elementos que cumplan con una condición.
+```{r Elementos que cumplen una condición}
+x[x > 15]
+```
+Y también obtener las posiciones de los elementos que cumplen con la condición.
+```{r Elementos que cumplen una condición 2}
+which(x > 15)
+```
+## Factores
+Son estructuras que se utilizan para manejar variables cualitativas en análisis estadísticos.
+
+Se pueden contemplar como un vector al que se añade un poco más de información consistente en los distintos valores presentes en el vector, llamados *niveles*.
+
+Se crean usando la función 'factor()'.
+```{r Creación de un factor}
+respuesta = c("si","no","si","no","no","no","si")
+respuesta = factor(respuesta)
+respuesta
+```
+
+## Matrices
+Las matrices **son vectores**, pero con dos atributos extra: número de filas y de columnas. Pero los vectores **NO SON** matrices de una fila o columna.
+Así se crea una matriz:
+```{r Creación de una matriz}
+matrix(1:3, nrow=2, ncol=3)
+```
+Como no hay suficientes valores, la función se encarga de repetir el vector introducido hasta rellenar la matriz. 
+Para añadirle dificulatd, la función primero rellena las matrices de manera vertical.
+
+### Las matrices también son vectores
+Así es como se crean las matrices.
+```{r Crear una matriz}
+x = matrix(2:10, ncol=3, nrow=3)
+x
+```
+Podemos obtener los valores que cumplen con una condición en forma de vector.
+```{r Valores que cumplen una condición en una matriz}
+x[x>6]
+```
+### Seleccionar parte de la matriz
+Se pueden seleccionar de distintas formas:
+* Coordenada fila-columna:
+```{r Selección de un elemento de una matriz}
+x[1,2]
+```
+* Una columna completa
+```{r Selección de una columna}
+x[,3]
+```
+* Un conjunto de filas o columnas
+```{r Selección de una serie de filas}
+x[,c(1,3)];
+x[c(2,3),]
+```
+### Operaciones útiles con matrices
+Tenemos dos matrices
+```{r Declaración de matrices}
+A=matrix(1:4,2,2);
+B=matrix(5:8,2,2)
+```
+* Producto matricial
+```{r Producto matricial}
+A %*% B
+```
+* Determinante
+```{r Determinante de una matriz}
+det(A)
+```
+* Producto componente a componente
+```{r Producto componente a componente}
+A * B
+```
+* Traspuesta
+```{r Traspuesta de una matriz}
+t(A)
+```
+* Extrear la diagonal de una matriz
+```{r Diagonal de una matriz}
+diag(A)
+```
+* Inversa
+```{r Inversa de una matriz}
+solve(A)
+```
+* Resolver un sistema de ecuaciones lineales *Ax = b*:
+```{r Resolución de un sistema de ecuaciones}
+b = c(1,3);
+solve(A,b)
+
+```
+* Autovalores y autovectores:
+```{r Autovalores y autovectores}
+eigen(A)
+```
+## Listas
+Una lista es un vector de objetos de tipos distintos, que conviene agrupar en la misma estructura.
+
+Es importante su comprensión porque unchas funciones devuelven resultados de esta forma.
+
+Para crearlas se usa el comando *list*:
+```{r Creación de una lista}
+milista = list(nombre='Pepe', no.hijos=3, edades.hijos=c(4,7,9));
+str(milista)
+
+```
+### Extraer información de una lista
+Hay varias formas de extraer la información de una lista.
+```{r Información de una lista}
+milista$nombre;
+milista[[1]];
+milista[['nombre']];
+milista$edades.hijos[2]
+```
+## Data frames
+Es la estructura más importante en R.
+
+Intuitivamente son matrices con entradas de distintos tipos. Tecnicamente es una lista formada por vectores de la misma longitud.
+
+Para crearlos se utiliza el comando data.frame:
+```{r Creación de un data frame}
+x = 7:9;
+y = c('a','b','c');
+mifichero = data.frame(edad=x, grupo=y);
+mifichero
+```
+Admiten comandos para matrices y para listas:
+```{r Comandos de matrices y listas}
+mifichero$edad
+mifichero[1,]
+```
+## Importar datos a R desde RStudio
+En la pestaña 'Environment' hay un boton para añadir datos a R provenientes de un fichero.
+```{r Carga de un fichero}
+notas <- read.csv2("~/Master Ciencia de Datos/MAE/notas.txt", sep="") # Esto solo funciona en mi equipo por la configuración de RStudio
+```
+También puede usarse mediante comando.
+
+### Aplicar funciones por columnas
+Se utilizan las funciones de la familia *apply*
+```{r Aplicación de funciones a un dataframe}
+apply(X = notas[c(2,3)], MARGIN = 2, FUN = mean) # MARGIN = 2 indica que hay que hacerlo por columnas
+sapply(X = notas[c(2,3)], FUN = mean) # Este ya lo hace por columnas
+lapply(X = notas[c(2,3)], FUN = mean) # Lo hace por columnas y también lo separa
+```
+
+### Aplicar funciones según factor
+Usamos otra función de la familia *apply*
+```{r Aplicación según factores}
+notas$tipo = factor(notas$tipo) # El índice debe ser tipo para aplicar la siguiente linea
+tapply(X = notas$nota09, INDEX = notas$tipo, FUN = mean)
+```
+* Se puede ver la media de las notas según el tipo de colegio en el año 2009
+* Puede verse lo mismo cambiando a notas$nota10
+```{r Otras estadísticas}
+anova = aov(notas$nota09 ~ notas$nota10)
+summary(anova)
+```
+Esta tabla muestra una serie de datos que se verán más adelante en el curso
+
+## Manejo de dplyr
+### Inttroducción
+Es un paquete de tidyverse que incluye las acciones más comunes que se realizan sobre un conjunto de datos:<ul>
+<li> Contar: *count*</li>
+<li> Seleccionar filas: *filter*</li>
+<li> Seleccionar columnas: *select*</li>
+<li> Ordenar: *arrange*</li>
+<li> Sintaxis en cadena o *pipes*</li>
+<li> Añadir nuevas variables: *mutate*</li>
+<li> Resumir: *summarise*</li>
+</ul>
+Las características generales son:<ul>
+<li> El primer argumento siempre es un *data.frame*</li>
+<li> El resto de argumentos indican lo que queremos hacer con el *data.frame*</li>
+<li> El resultado siempre tiene la estructura de un *data.frame*</li>
+</ul>
+
+Seleccionamos 15 observaciones (5 de cada especie) del fichero *iris* a la manera *tradicional*
+```{r Carga de lirios}
+lirios = iris[c(1:5, 51:55, 101:105),]
+head(lirios)
+```
+Usaremos *lirios* como fichero de datos en los ejemplos que siguen. Para ello tenemos que cargar *dlpyr*:
+```{r Carga de dplyr}
+library(dplyr)
+```
+Para saber cuántos lirios hay de cada especie hay que usar la función *count*:
+```{r Uso de count}
+count(lirios, Species)
+```
+### Uso de *filter*
+Para seleccionar los lirios de la especie *setosa* usamos la función *filter*:
+```{r Uso de filter}
+filter(lirios, Species == 'setosa')
+```
+También se pueden seleccionar todos los datos pertenecientes a dos especies:
+```{r Uso de filter con condiciones}
+filter(lirios, Species == 'setosa' | Species == 'virginica')
+```
+### Uso de *select*
+Seleccionamos las variables relaccionadas con el sépalo:
+```{r Selección de datos relacionados con los sépalos}
+select(lirios, Sepal.Length, Sepal.Width)
+```
+Selección de un rango de variables:
+```{r Selección de un rango de variables}
+select(lirios, Petal.Length:Sepal.Length)
+```
+Seleccionar todas las variables menos *Species*:
+```{r Excluir una variable de la selección}
+select(lirios, -Species)
+```
+Seleccionamos las variables cuyo nombre contenga *Petal*:
+```{r Selección de variables que contengan una cadena}
+select(lirios, contains('Petal'))
+```
+### Uso de *arrange*
+Por defecto, esta función ordena de **menor a mayor** el valor de una variable.
+```{r Uso de arrange}
+arrange(lirios, Sepal.Length)
+```
+Para ordenar *de mayor a menor* se hace de lña siguiente manera:
+```{r Orden de mayor a menor con arrange}
+arrange(lirios, -Sepal.Length)
+```
+Se puede ordenar las especies por orden alfabético y dentro de cada especie por otra variable de menor a mayor:
+```{r Ordenar por dos o más variables}
+arrange(lirios, Species, Sepal.Length)
+
+```
+### Sintaxis en cadena o *pipes*
+Se usa el operador '%>%'. El elemento que lo precede es el primer argumento para el comando que le sigue:
+```{r Manejo de Pipes}
+lirios %>%
+  select(contains('Petal')) %>%
+  filter(Petal.Length > 4) %>%
+  arrange(Petal.Length)
+```
+### Añadir nuevas variables: *mutate*
+Añadimos una nueva variable que corresponda al cociente entre anchura y longitud del pétalo (lo que podría cuantificar la forma del pétalo):
+```{r Creación de una nueva variable}
+lirios_nuevo = lirios %>%
+  select(contains('Petal')) %>%
+  mutate(forma = round(Petal.Width/Petal.Length, 2))
+```
+*mutate* tiene variantes:<ul>
+<li>*mutate*: Añade una nueva variable al data frame</li>
+<li>*transmute*: Añade una nueva variable y elimina las antiguas</li>
+<li>*mutate_all*: Cambia todas las variables de un data frame simultaneamente</li>
+<li>*mutate_at*: Cambia las variables especificadas por nombre</li>
+<li>*mutate_if*: Cambia las variables que cumplen una condición</li>
+</ul>
+### Resumir: summarise
+Se usa para hacer resúmenes. Se suele usar en combinación con *group_by*.
+```{r Uso de summarise}
+lirios %>%
+  group_by(Species) %>%
+  summarise(media_PL = mean(Petal.Length),
+            varianza_PL = var(Petal.Length))
+```
+### Operaciones por columnas: across()
+Esta función calcula las medias y las desviaciones típicas de cada medida de pétalo en cada una de las tres especias
+```{r Uso de función across}
+lirios %>%
+  group_by(Species) %>%
+  summarise(across(contains('Petal'),
+                   list(Media = mean, DT = sd)))
+```
+## Visualización de datos
+Para la visualización de datos se usará *ggplot2*, que es otro paquete del tidyverse.
+
+El esquema que se sigue para la creación de cualquier gráfico con ggplot2 es:
+```
+ggplot(data=<DATA>) + 
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS))
+```
+Donde: <ul>
+<li>```ggplot``` crea un sistema de coordenadas vacio. El argumento 'data' fija el data frame donde están los datos.</li>
+<li>```<GEOM_FUNCTION>``` añade una capa al gráfico con el tipo de elementos que se van a representar.</li>
+<li>```mapping = aes(<MAPPINGS>)``` asigna variables del fichero a las propiedades visuales del gráfico.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

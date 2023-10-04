@@ -24,28 +24,17 @@ class KPCA():
         self.gamma = gamma
 
     def fit(self, X):
-        # Calculamos las distancias cuadradas euclideas por pares de los datos.
-        sq_dists = pdist(X, "sqeuclidean")
-
-        # Convertimos la matriz de distancias en una matriz cuadrada.
-        sq_mat_dist = squareform(sq_dists)
-
         # Comprobamos el tipo de kernel
         if self.kernel == "linear":
             self.kernel_matrix = np.matmul(np.transpose(X), X)
             
         elif self.kernel == "rbf":
-            # Establecemos el kernel si no está declarado
+            # Cálculo de gamma
             if self.gamma is None:
-                self.gamma = float(1.0 / X.shape[1] )
-            # Obtenemos la matriz kernel
-            self.kernel_matrix = exp(-self.gamma * sq_mat_dist)
-
-            # Centramos el kernel
-            N = self.kernel_matrix.shape[0]
-            one_n = np.ones((N, N)) / N
-
-            self.kernel_matrix = self.kernel_matrix - one_n.dot(self.kernel_matrix) - self.kernel_matrix.dot(one_n) + one_n.dot(self.kernel_matrix).dot(one_n)
+                self.gamma = 1.0 / X.shape[1]  # Default gamma
+            # self.kernel_matrix = rbf_kernel(X, gamma=self.gamma)
+            
+            
         else:
             raise ValueError("Unsupported kernel type")
 
@@ -62,7 +51,7 @@ class KPCA():
         elif self.kernel == "rbf":
             if self.gamma is None:
                 self.gamma = 1.0 / X.shape[1]  # Default gamma
-            kernel_values = rbf_kernel(X, self.eigenvectors[:, :self.n_components], gamma=self.gamma)
+            kernel_values = rbf_kernel(X, self.eigvecs[:, :self.n_components], gamma=self.gamma)
             return kernel_values
         else:
             raise ValueError("Unsupported kernel type")
@@ -85,7 +74,7 @@ plt.legend()
 scaler = StandardScaler()
 scaler.fit(X_train)
 X_scaler = scaler.transform(X_train)
-
+'''
 # Hiperparámetros de los KPCA's
 kernel = 'linear'
 n_components=1
@@ -108,5 +97,33 @@ print(model_my.transform(X_new))
 print("Proyección sklearn:")
 print(model_sk.transform(X_new))
 print("=================================================")
+'''
+kernel = 'rbf'
+n_components=1
 
-kernel = "rbf"
+# Model definition (complete).
+model_my = KPCA(n_components=n_components, kernel=kernel)
+model_sk = KernelPCA(n_components=n_components)
+
+# Procesamos los datos
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_scaler = scaler.transform(X_train)
+
+# Training of the models (complete).
+model_my.fit(X_scaler)
+model_sk.fit(X_scaler)
+
+# Comparative of the eigenvectors (complete).
+print("Comparativas de autovectores")
+print("Autovector propio:")
+print(model_my.projected)
+print("Autovector sklearn:")
+print(model_sk.eigenvectors_)
+
+# Comparative of the projections (complete).
+print("Comparativas de proyecciones")
+print("Proyección propia:")
+print(model_my.transform(X_new))
+print("Proyección sklearn:")
+print(model_sk.transform(X_new))

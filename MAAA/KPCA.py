@@ -32,6 +32,7 @@ class KPCA():
             # Cálculo de gamma
             if self.gamma is None:
                 self.gamma = 1.0 / X.shape[1]  # Default gamma
+            # Para el kernel hay que calcular phi(np.transpose(X)) x  phi(X)
             # self.kernel_matrix = rbf_kernel(X, gamma=self.gamma)
             
             

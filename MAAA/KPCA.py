@@ -3,7 +3,7 @@ from math import *
 from sklearn.datasets import make_blobs
 from sklearn.decomposition import KernelPCA
 from sklearn.decomposition import PCA
-from sklearn.metrics.pairwise import rbf_kernel
+from sklearn.metrics.pairwise import pairwise_kernels
 from sklearn.preprocessing import StandardScaler
 from scipy.sparse.linalg import eigs
 from scipy.spatial.distance import pdist, squareform
@@ -26,16 +26,16 @@ class KPCA():
     def fit(self, X):
         # Comprobamos el tipo de kernel
         if self.kernel == "linear":
-            self.kernel_matrix = np.matmul(np.transpose(X), X)
+            self.kernel_matrix = np.dot(np.transpose(X), X)
+            # self.kernel_matrix = pairwise_kernels(X, metric=self.kernel)
             
         elif self.kernel == "rbf":
-            # Cálculo de gamma
-            if self.gamma is None:
-                self.gamma = 1.0 / X.shape[1]  # Default gamma
-            # Para el kernel hay que calcular phi(np.transpose(X)) x  phi(X)
-            # self.kernel_matrix = rbf_kernel(X, gamma=self.gamma)
+            # Usar rbk_ker
+
+            # Pasar KernelCenterer
             
-            
+            # Hacer fit
+            pass
         else:
             raise ValueError("Unsupported kernel type")
 
@@ -50,10 +50,8 @@ class KPCA():
         if self.kernel == "linear":
             return np.dot(X, self.eigvecs[:, :self.n_components])
         elif self.kernel == "rbf":
-            if self.gamma is None:
-                self.gamma = 1.0 / X.shape[1]  # Default gamma
-            kernel_values = rbf_kernel(X, self.eigvecs[:, :self.n_components], gamma=self.gamma)
-            return kernel_values
+            # Hacer el método transform
+            pass
         else:
             raise ValueError("Unsupported kernel type")
 
@@ -75,7 +73,7 @@ plt.legend()
 scaler = StandardScaler()
 scaler.fit(X_train)
 X_scaler = scaler.transform(X_train)
-'''
+
 # Hiperparámetros de los KPCA's
 kernel = 'linear'
 n_components=1
@@ -106,11 +104,6 @@ n_components=1
 model_my = KPCA(n_components=n_components, kernel=kernel)
 model_sk = KernelPCA(n_components=n_components)
 
-# Procesamos los datos
-scaler = StandardScaler()
-scaler.fit(X_train)
-X_scaler = scaler.transform(X_train)
-
 # Training of the models (complete).
 model_my.fit(X_scaler)
 model_sk.fit(X_scaler)
@@ -127,4 +120,4 @@ print("Comparativas de proyecciones")
 print("Proyección propia:")
 print(model_my.transform(X_new))
 print("Proyección sklearn:")
-print(model_sk.transform(X_new))
+print(model_sk.transform(X_new))'''

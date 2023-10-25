@@ -8,7 +8,7 @@ Las carpetas están ordenadas por asignatura:
 * [MAE](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/MAE): Métodos Avanzados en Estadística
 * NI: Neuroinformática
 * OPT: Optimización
-* PDGE: Procesamiento de Datos a Gran Escala
+* [PDGE](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PDGE): Procesamiento de Datos a Gran Escala
 * PIT: Procesamiento de Información Temporal
 * PST: Procesamiento de Señal y Transformadas
 * PE: Procesos estocásticos

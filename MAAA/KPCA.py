@@ -26,13 +26,14 @@ class KPCA():
     def fit(self, X):
         # Comprobamos el tipo de kernel
         if self.kernel == "linear":
-            self.kernel_matrix = np.matmul(np.transpose(X), X)
+            self.kernel_matrix = np.dot(np.transpose(X), X)
             
         elif self.kernel == "rbf":
             # Cálculo de gamma
             if self.gamma is None:
                 self.gamma = 1.0 / X.shape[1]  # Default gamma
             # Para el kernel hay que calcular phi(np.transpose(X)) x  phi(X)
+
             # self.kernel_matrix = rbf_kernel(X, gamma=self.gamma)
             
             
@@ -75,7 +76,7 @@ plt.legend()
 scaler = StandardScaler()
 scaler.fit(X_train)
 X_scaler = scaler.transform(X_train)
-'''
+
 # Hiperparámetros de los KPCA's
 kernel = 'linear'
 n_components=1
@@ -127,4 +128,4 @@ print("Comparativas de proyecciones")
 print("Proyección propia:")
 print(model_my.transform(X_new))
 print("Proyección sklearn:")
-print(model_sk.transform(X_new))
+print(model_sk.transform(X_new))'''

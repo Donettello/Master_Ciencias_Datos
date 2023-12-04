@@ -1,0 +1,145 @@
+---
+title: "Exploración gráfica de datos"
+author: "Álvaro José Álvarez Arranz y Miguel Ángel Calderón Pazmiño"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Objetivos
+
+El objetivo de este ejercicio consiste en utilizar los métodos exploratorios vistos en teoría para obtener información y conclusiones sobre un conjunto de datos de dominio.
+
+Para ello, se usará u dataset relacionado con el resultado de un *Card Sorting* obtenido a través de una evaluación con distintos usuarios. *Card Sorting* es una técnica de investigación y evaluación utilizada en Interacción Persona-Ordenador y Experiencia de usuario que permite la investigación inicial con usuarios y también la evaluación de estructuras de información (por ejemplo, contenidos de una aplicación web o composiciónde un menú de navegación). Esta técnica consiste en suministrar al usuario unas serie de tarjetas que deben ordenar situándolas destro de un conjunto de categorías (estas pueden ser predefinidas, ser creadas por el usuario, o una combinación de ambas). Cuando la ordenación se realiza varias veces con diferentes usuarios, se obtiene información sobre las relaciones entre tarjetas y categorías, lo que permite obtener información sobre el modelo mental del usuario (en fases iniciales de una investigación), o una indicación sobre la idoneidad de estructuras ya existentes (por ejemplo, la idoneidad de las opciones dentro de las categorías de un menú de una aplicación software).
+
+El dataset a utilizar es el resultado de un Card Sorting donde se les pidió a 24 usuarios clasificar 40 tarjetas que representaban distintos alimentos. Al tratarse de un Card Sorting *abierto*, los usuarios fueron los que crearon las categorías que consideraron convenientes, por lo que se tiene un total de 240 categorías clasificatorias. En concreto, el dataset es un únicp fichero CSV que puede obtenerse en el siguiente enlace:
+
+<http://cardsorting.net/tutorials/25.csv>
+
+# Estructura del fichero
+
+El dataset se dispone en forma de matriz (`M`), de forma que las categorías se situan en filas, constituyendo observaciones (*n=240*), mientras que las tarjetas se distribuyen en columnas, constituyendo variables (*p=40*). Por tanto, `M[i,j]=N`implica que `N` usuarios han clasificado la tarjeta `j` en la categoría `i`.
+
+Para el motivo de este ejercicio, se prescindirá de las columnas *Uniqid*, *Startdate*, *Starttime*, *Endtime*, *QID* y *Comment*.
+
+\newpage
+# Tareas
+
+1- **Carga del dataset**. Para ello lo que haremos será usar el link que se indica en el enunciado del ejercicio. Para ello usaremos la función `read.csv``:
+
+```{r Carga del dataset}
+data = read.csv("http://cardsorting.net/tutorials/25.csv")
+```
+
+Una vez cargados, vamos a explorar los datos que hay en CSV del enlace. Para ello vamos a usar las funciones `str(data)` y ``head(data)` con el objetivo de ver el típo de variables que se usan y cómo se ven las primeras filas:
+```{r Explorar los datos con str()}
+str(data)
+```
+```{r Explorar los datos con head()}
+head(data)
+```
+
+Ahora que tenemos una idea de cómo se estructuran los datos, vamos a pasar a limpiarlos para poder trabajar con ellos.
+
+2- **Transformaciones**. 
+
+Dado que podemos ver que están las columnas *Uniqid*, *Startdate*, *Starttime*, *Endtime*, *QID* y *Comment*, vamos a eliminar dichas columnas del dataset:
+
+```{r Eliminación de columnas innecesarias}
+#install.packages('dplyr')
+library(dplyr)
+
+data2 = select(data, -Uniqid, -Startdate, -Starttime, -Endtime, -QID, -Comment)
+head(data2)
+```
+
+Ahora que tenemos las columnas que no nos interesan eliminadas, lo primero que vamos a hacer es comprobar si existe algún valor faltante en el dataset, y cuantos son. Para ello usaremos la función `sum()` y `is.na()`:
+```{r Comprobación datos faltantes}
+sum(is.na(data2))
+```
+Como podemos observar, no hay valores *NA* en el connjunto de datos. Ahora vamos a ver las categorías.
+```{r Nombre de las categorías}
+sort(data2$Category)
+```
+Dado que las categorías son varias y creadas por los usuarios, al ser una prueba abierta, vamos a asegurarnos de que estén bien y en minúsculas:
+```{r Limpieza de texto}
+data2$Category = trimws(tolower(data2$Category))
+
+sort(data2$Category)
+```
+
+
+3- **Creación de un histograma**: Ahora que los datos ya están correctos podemos crear un histograma para ver cómo se reparten los datos. Dado que los datos a representar son variables discretas, lo que haremos será usar la función `geom_bar()`:
+```{r Creación de histograma}
+library(ggplot2)
+
+ggplot(data2, aes(x = Category)) +
+  geom_bar(fill = "lightblue", color = "black", alpha = 0.7) +
+  labs(title = "Gráfico de Barras de Categorías", x = "Categoría", y = "Frecuencia") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+4- **Matriz de distancia**: Ahora vamos a comparar las distancias entre las tarjetas. Dado que hay una cantidad considerable de tarjetas, la mejor forma de hacer esta representación es la de usar una matriz con mapa de calor para encontrar las tarjetas más distantes, y para ello lo vamos a hacer de la siguiente manera:
+```{r Matriz de distancias}
+# Bibliotecas necesarias
+library(ggplot2)
+library(tidyverse)
+
+var_names = names(data2)[-1]
+
+data_distancias = data2[-1]
+
+matriz_distancias <- dist(t(data_distancias))
+
+# Convertir la matriz de distancias a un dataframe
+df_distancias <- as.data.frame(as.matrix(matriz_distancias))
+
+# Asignar nombres a las filas y columnas del dataframe
+rownames(df_distancias) <- var_names
+colnames(df_distancias) <- var_names
+
+# Convertir el dataframe de distancias a formato largo y añadir nombres de filas y columnas como variables
+df_distancias_largo <- df_distancias %>%
+  rownames_to_column(var = "Variable1") %>%
+  gather(key = "Variable2", value = "Distancia", -Variable1)
+
+mapa_calor <- ggplot(df_distancias_largo, aes(Variable1, Variable2, fill = Distancia)) +
+  geom_tile() +
+  scale_fill_gradient(low = "green", high = "red") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Matriz de Distancias entre Tarjetas",
+       x = "Tarjetas",
+       y = "Tarjetas")
+
+# Añadir una leyenda en la parte derecha y de orientación vertical
+mapa_calor <- mapa_calor +
+  theme(legend.position = "right",
+        legend.direction = "vertical")
+
+mapa_calor
+```
+
+Puede observarse que pese a la gran cantidad de categorías, puede verse las cercanías entre tarjetas mejor que las lejanías.
+
+
+5- **Representación gráfica**: Ahora vamos a representar las relaciones de las tarjetas con un grafo. Para ello se usará `qgraph`.
+```{r Gráfico de relaciones}
+# install.packages("qgraph")
+library(qgraph)
+
+qgraph(input=df_distancias_largo,
+  var.names = var_names,
+  layout = "spring",  # Puedes ajustar el tipo de layout según tus preferencias
+  esize = df_distancias_largo$Distancia,  # Especificar el tamaño de los bordes según la distancia
+  vsize = 7,  # Ajustar el tamaño de los nodos
+  legend.cex = 0.9  # Ajustar el tamaño de la leyenda
+)
+```
+
+Podemos observar que debido a la gran cantidad de tarjetas, es muy dificil ver cómo se relacionan, pero sí que podemos ver relaciones más fuertes que otras como "Huevo" y "Pizza" por estar estrechamente relacionados en algunos platos.
+
+6- **Conclusiones**: Se han visto algunas formas en las que los datos pueden ser visualizados como las *barras*, matrices configuradas como mapas de calor o gráficos de relaciones. Debido a la gran cantidad de categorías, que al ser una prueba abierta impica que los participantes podían crear las suyas propias, y a la gran cantidad de tarjetas la visualización de los datos de relaciones se vuelve dificil, necesitando una posible normalización de categorías y/o reducción de tarjetas para su clasificación.
+

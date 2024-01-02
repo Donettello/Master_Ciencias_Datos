@@ -1,7 +1,7 @@
 ---
 title: "Apuntes Métodos Avanzados en Estadística"
 author: "Alvaro"
-date: "14/09/2023"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
 output: pdf_document
 ---
 

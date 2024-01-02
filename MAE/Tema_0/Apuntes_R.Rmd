@@ -2,7 +2,7 @@
 title: "Apuntes Métodos Avanzados en Estadística"
 author: "Alvaro"
 date: "14/09/2023"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -231,20 +231,21 @@ Esta tabla muestra una serie de datos que se verán más adelante en el curso
 
 ## Manejo de dplyr
 ### Inttroducción
-Es un paquete de tidyverse que incluye las acciones más comunes que se realizan sobre un conjunto de datos:<ul>
-<li> Contar: *count*</li>
-<li> Seleccionar filas: *filter*</li>
-<li> Seleccionar columnas: *select*</li>
-<li> Ordenar: *arrange*</li>
-<li> Sintaxis en cadena o *pipes*</li>
-<li> Añadir nuevas variables: *mutate*</li>
-<li> Resumir: *summarise*</li>
-</ul>
-Las características generales son:<ul>
-<li> El primer argumento siempre es un *data.frame*</li>
-<li> El resto de argumentos indican lo que queremos hacer con el *data.frame*</li>
-<li> El resultado siempre tiene la estructura de un *data.frame*</li>
-</ul>
+Es un paquete de tidyverse que incluye las acciones más comunes que se realizan sobre un conjunto de datos:
+
+* Contar: *count* 
+* Seleccionar filas: *filter* 
+* Seleccionar columnas: *select* 
+* Ordenar: *arrange* 
+* Sintaxis en cadena o *pipes* 
+* Añadir nuevas variables: *mutate* 
+* Resumir: *summarise* 
+ 
+Las características generales son:  
+* El primer argumento siempre es un *data.frame* 
+* El resto de argumentos indican lo que queremos hacer con el *data.frame* 
+* El resultado siempre tiene la estructura de un *data.frame* 
+ 
 
 Seleccionamos 15 observaciones (5 de cada especie) del fichero *iris* a la manera *tradicional*
 ```{r Carga de lirios}
@@ -314,13 +315,14 @@ lirios_nuevo = lirios %>%
   select(contains('Petal')) %>%
   mutate(forma = round(Petal.Width/Petal.Length, 2))
 ```
-*mutate* tiene variantes:<ul>
-<li>*mutate*: Añade una nueva variable al data frame</li>
-<li>*transmute*: Añade una nueva variable y elimina las antiguas</li>
-<li>*mutate_all*: Cambia todas las variables de un data frame simultaneamente</li>
-<li>*mutate_at*: Cambia las variables especificadas por nombre</li>
-<li>*mutate_if*: Cambia las variables que cumplen una condición</li>
-</ul>
+*mutate* tiene variantes:  
+
+* *mutate*: Añade una nueva variable al data frame 
+* *transmute*: Añade una nueva variable y elimina las antiguas 
+* *mutate_all*: Cambia todas las variables de un data frame simultaneamente 
+* *mutate_at*: Cambia las variables especificadas por nombre 
+* *mutate_if*: Cambia las variables que cumplen una condición 
+ 
 ### Resumir: summarise
 Se usa para hacer resúmenes. Se suele usar en combinación con *group_by*.
 ```{r Uso de summarise}
@@ -343,28 +345,20 @@ Para la visualización de datos se usará *ggplot2*, que es otro paquete del tid
 El esquema que se sigue para la creación de cualquier gráfico con ggplot2 es:
 ```
 ggplot(data=<DATA>) + 
-  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS))
+  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
 ```
-Donde: <ul>
-<li>```ggplot``` crea un sistema de coordenadas vacio. El argumento 'data' fija el data frame donde están los datos.</li>
-<li>```<GEOM_FUNCTION>``` añade una capa al gráfico con el tipo de elementos que se van a representar.</li>
-<li>```mapping = aes(<MAPPINGS>)``` asigna variables del fichero a las propiedades visuales del gráfico.</li>
-</ul>
+Donde:   
+* ```ggplot``` crea un sistema de coordenadas vacio. El argumento 'data' fija el data frame donde están los datos. 
+* ```<GEOM_FUNCTION>``` añade una capa al gráfico con el tipo de elementos que se van a representar. 
+* ```mapping = aes(<MAPPINGS>)``` asigna variables del fichero a las propiedades visuales del gráfico. 
+ 
+Las `<GEOM_FUNCTION>` pueden ser las siguientes:
 
+* `geom_point()`: Gráfico de dispersión.
+* `geom_smooth()`: Junto a `geom_point` para recta de mínimos cuadrados.
+* `geom_line()`: Gráfico de líneas.
+* `geom_bar()`: Gráfico de barras.
+* `geom_histogram()`: Histograma.
+* `geom_boxplot()`: Gráfico de caja y bigote.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Estos son algunos de los muchos diagramas disponibles.

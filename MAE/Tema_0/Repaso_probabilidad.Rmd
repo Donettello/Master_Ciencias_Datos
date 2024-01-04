@@ -1,6 +1,6 @@
 ---
 title: "Repaso probabilidad"
-author: "Alvaro"
+author: "Álvaro José Álvarez Arranz"
 date: "`r format(Sys.Date(), '%d/%m/%Y')`"
 output: pdf_document
 ---

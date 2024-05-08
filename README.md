@@ -7,7 +7,7 @@ Las carpetas están ordenadas por asignatura:
 * [MAAA](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/MAAA): Métodos Avanzados en Aprendizaje Automático
 * [MAE](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/MAE): Métodos Avanzados en Estadística
 * [NEI](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/NEI): Neuroinformática
-* OPT: Optimización
+* [OPT](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/OPTIM): Optimización
 * [PDGE](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PDGE): Procesamiento de Datos a Gran Escala
 * PIT: Procesamiento de Información Temporal
 * [PST](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PST): Procesamiento de Señal y Transformadas

@@ -9,7 +9,7 @@ Las carpetas están ordenadas por asignatura:
 * [NEI](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/NEI): Neuroinformática
 * [OPT](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/OPTIM): Optimización
 * [PDGE](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PDGE): Procesamiento de Datos a Gran Escala
-* PIT: Procesamiento de Información Temporal
+* [PIT]((https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PIT): Procesamiento de Información Temporal
 * [PST](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PST): Procesamiento de Señal y Transformadas
 * [PE](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PE): Procesos estocásticos
 * [PICDD](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PICDD): Proyecto de Investigación para la Ciencia de Datos

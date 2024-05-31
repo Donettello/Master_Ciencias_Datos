@@ -12,6 +12,6 @@ Las carpetas están ordenadas por asignatura:
 * PIT: Procesamiento de Información Temporal
 * [PST](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PST): Procesamiento de Señal y Transformadas
 * [PE](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PE): Procesos estocásticos
-* PICDD: Proyecto de Investigación para la Ciencia de Datos
+* [PICDD](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/PICDD): Proyecto de Investigación para la Ciencia de Datos
 * [RI](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/RI): Recuperación de Información
 * [TI](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/TI): Teoría de la Información

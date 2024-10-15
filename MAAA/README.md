@@ -1,5 +1,3 @@
 # Métodos Avanzados en Aprendizaje Automático
 
-En esta carpeta se encuentran los códigos necesarios para la realización de las prácticas para la asignatura.
-
-También algun *notebook* sobre funcionamiento de las cosas.
+En esta carpeta se encuentran las prácticas realizadas en la asignatura Métodos Avanzados en Aprendizaje Automático realizadas en el curso 2024-2025.

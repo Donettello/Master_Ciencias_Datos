@@ -1,5 +1,5 @@
 # Máster Ciencias Datos
-Códigos y prácticas realizadas durante el transcurso del Máster en Ciencia de Datos en la UAM.
+Repositorio personal de los códigos y prácticas realizadas durante el transcurso del Máster en Ciencia de Datos en la UAM.
 Las carpetas están ordenadas por asignatura:
 * AR: Aprendizaje por Refuerzo
 * [CN](https://github.com/Donettello/Master_Ciencias_Datos/tree/main/CN): Computación numérica

@@ -7,3 +7,6 @@
 *.log
 *.pptx
 AR*
+TFM*
+# Eliminar TFM a su debido tiempo
+# Revisar AR y eliminar a su debido tiempo
